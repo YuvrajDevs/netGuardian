@@ -87,24 +87,46 @@
 # print(missing_configurationPassword('conf_2034.rtf'))
 
 
+# def secureAccessProtocols(file):
+#     warning = set()
+#     with open(file, 'r') as file:
+#         for line in file:
+#             if line.startswith('tftp-server'):
+#                 warning.add(f"tftp {line}")
+#             elif line.startswith('ip ftp'):
+#                 warning.add(f"ftp {line}")
+#             elif line.startswith('ip http'):
+#                 warning.add(f"http {line}")
+#         if len(warning) > 0:
+#             return f"Severity:2\nInsecure access protocol in lines -->\n{''.join(warning)}"  # Join elements with newlines
+#
+# text = secureAccessProtocols('conf_2033.rtf')
+# def remove_backslashes():
+#     lines = text.splitlines()
+#     clean_lines = [line.rstrip("\\") for line in lines]
+#     return "\n".join(clean_lines)
+# print(remove_backslashes())
 
-def secureAccessProtocols(file):
-    warning = set()
-    with open(file, 'r') as file:
-        for line in file:
-            if line.startswith('tftp-server'):
-                warning.add(f"tftp {line}")
-            elif line.startswith('ip ftp'):
-                warning.add(f"ftp {line}")
-            elif line.startswith('ip http'):
-                warning.add(f"http {line}")
-        if len(warning) > 0:
-            return f"Severity:2\nInsecure access protocol in lines -->\n{''.join(warning)}"  # Join elements with newlines
 
-text = secureAccessProtocols('conf_2033.rtf')
-def remove_backslashes():
-    lines = text.splitlines()
-    clean_lines = [line.rstrip("\\") for line in lines]
-    return "\n".join(clean_lines)
-print(remove_backslashes())
+# def remove_backslashes(lines):
+#     lines = lines.splitlines()
+#     clean_lines = [line.rstrip("\\") for line in lines]
+#     return "\n".join(clean_lines)
+# def check_insecure_snmp(file):
+#     lines = []
+#     with open(file, 'r') as file:
+#         for line in file:
+#             if line.startswith('snmp-server'):
+#                 parts = line.strip().split()
+#                 if parts[-2] in ['v3 noauth', 'v1', 'v2c']:
+#                     lines.append(f"Insecure SNMP configuration: {line.strip()}")
+#                 else:
+#                     if parts[1] == "community":
+#                         if parts[-2] == 'public':
+#                             lines.append(f"Insecure SNMP configuration: {line.strip()}")
+#     text = remove_backslashes("\n".join(lines))
+#     if len(text)>0:
+#         return f"Severity:2\nInsecure SNMP access detected --> \n{text}"
+# print(check_insecure_snmp('conf_2038.rtf'))
+
 
