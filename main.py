@@ -130,3 +130,47 @@
 # print(check_insecure_snmp('conf_2038.rtf'))
 
 
+# def check_weak_encryption(file):
+#     weak_encryption_algorithms = ['des', '3des', 'rc2', 'rc4', 'md5', 'sha-1', 'wep', 'ssl 2.0', 'ssl 3.0', 'tls 1.0',
+#                                   'tls 1.1', 'pptp']
+#     with open(file, 'r') as file:
+#         for line in file:
+#             line = line.lower()  # Convert line to lowercase
+#             words = line.split()  # Split line into words
+#         for algorithm in weak_encryption_algorithms:
+#             if algorithm in words:
+#                 print(f"Weak encryption algorithm found: {algorithm}")
+#
+# check_weak_encryption('Sample_configs/conf_2034.rtf')
+
+
+def remove_backslashes(lines):
+    lines = lines.splitlines()
+    clean_lines = [line.rstrip("\\") for line in lines]
+    return "\n".join(clean_lines)
+def check_host_authentication(file):
+    interface_up = True
+    authentication_enabled = False
+    interface_name = ''
+
+    with open(file, 'r') as file:
+        list = []
+        for line in file:
+            line = line.strip()
+            if line.startswith('interface'):
+                if interface_up and not authentication_enabled and interface_name:
+                    list.append(f"Missing host authentication on access port: {interface_name}")
+                interface_name = line.split()[1]
+                interface_up = True
+                authentication_enabled = False
+            elif line == 'shutdown':
+                interface_up = False
+            elif line == 'dot1x pae authenticator':
+                authentication_enabled = True
+        if interface_up and not authentication_enabled and interface_name:
+            list.append(f"Missing host authentication on access port: {interface_name}")
+    final =  "\n".join(list)
+    return f"Severity:1\n{remove_backslashes(final)}"
+
+
+print(check_host_authentication('conf_2038.rtf'))
