@@ -44,3 +44,34 @@
 .riskBar{
   margin: 16px 0;
 }
+
+.tablelol {
+  position: relative;
+  transition: width 0.3s ease;
+  margin-top: 18px;
+}
+
+.tablelol:hover {
+  width: 150px; /* Adjust the width as needed */
+}
+
+.tablelol:hover .riskBarText {
+  opacity: 1;
+  visibility: visible;
+}
+
+.riskBarText {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+  background-color:transparent;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 1;
+  
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+

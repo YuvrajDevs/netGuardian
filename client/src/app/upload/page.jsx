@@ -1,4 +1,4 @@
-import Dropzone from "@/components/Dropzone"
+import Dropzone from "../components/Dropzone"
 
 const Upload = () => {
   return (

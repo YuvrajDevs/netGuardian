@@ -1,5 +1,5 @@
 "use client"
-import Link from 'next/link';
+import Link from "next/link";
 
 const DeviceReport = ({ deviceName, riskColor, reportUrl }) => {
   const downloadPdf = (url) => {
@@ -20,14 +20,14 @@ const DeviceReport = ({ deviceName, riskColor, reportUrl }) => {
         <h2 className='subHead'>Device 5</h2>
         <h2 className='subHead'>Device 6</h2>
       </div>
-      <div className="flex flex-col items-center">
+      <div className=" flex flex-col items-center">
         <h1 className='font-outfit font-bold text-[24px] bg-yellow-400 px-4 py-1 rounded-full'>Risk</h1>
-        <div style={{ backgroundColor: "#62df00" }} className="riskBar w-16 color px-14 py-4 rounded-full"></div>
-        <div style={{ backgroundColor: "#62df00" }} className="riskBar w-16 color px-14 py-4 rounded-full"></div>
-        <div style={{ backgroundColor: "#ffff00" }} className="riskBar w-16 color px-14 py-4 rounded-full"></div>
-        <div style={{ backgroundColor: "#62df00" }} className="riskBar w-16 color px-14 py-4 rounded-full"></div>
-        <div style={{ backgroundColor: "#ffff00" }} className="riskBar w-16 color px-14 py-4 rounded-full"></div>
-        <div style={{ backgroundColor: "#ff0000" }} className="riskBar w-16 color px-14 py-4 rounded-full"></div>
+        <div style={{ backgroundColor: "#62df00" }} className="tablelol riskBar w-16 color px-14 py-4 rounded-full"><span className="riskBarText">Low Risk</span> </div>
+        <div style={{ backgroundColor: "#62df00" }} className="tablelol riskBar w-16 color px-14 py-4 rounded-full"></div>
+        <div style={{ backgroundColor: "#ffff00" }} className="tablelol riskBar w-16 color px-14 py-4 rounded-full"></div>
+        <div style={{ backgroundColor: "#62df00" }} className="tablelol riskBar w-16 color px-14 py-4 rounded-full"></div>
+        <div style={{ backgroundColor: "#ffff00" }} className="tablelol riskBar w-16 mt-10 color px-14 py-4 rounded-full"></div>
+        <div style={{ backgroundColor: "#ff0000" }} className="tablelol riskBar w-16 mt-7 color px-14 py-4 rounded-full"></div>
       </div>
       <div className="flex flex-col items-center">
         <h1 className='font-outfit font-bold text-[24px] bg-yellow-400 px-4 py-1 rounded-full'>Report URL</h1>
