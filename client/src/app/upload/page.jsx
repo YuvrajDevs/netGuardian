@@ -1,4 +1,4 @@
-import Dropzone from "../components/Dropzone"
+import DragNDrop from "../components/DragNDrop"
 
 const Upload = () => {
   return (
