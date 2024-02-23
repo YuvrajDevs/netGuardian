@@ -1,5 +1,4 @@
-#12
-
+#1 2
 def remove_backslashes(lines):
     lines = lines.splitlines()
     clean_lines = [line.rstrip("\\") for line in lines]
