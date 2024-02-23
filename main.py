@@ -144,33 +144,104 @@
 # check_weak_encryption('Sample_configs/conf_2034.rtf')
 
 
+# def remove_backslashes(lines):
+#     lines = lines.splitlines()
+#     clean_lines = [line.rstrip("\\") for line in lines]
+#     return "\n".join(clean_lines)
+# def check_host_authentication(file):
+#     interface_up = True
+#     authentication_enabled = False
+#     interface_name = ''
+#
+#     with open(file, 'r') as file:
+#         list = []
+#         for line in file:
+#             line = line.strip()
+#             if line.startswith('interface'):
+#                 if interface_up and not authentication_enabled and interface_name:
+#                     list.append(f"Missing host authentication on access port: {interface_name}")
+#                 interface_name = line.split()[1]
+#                 interface_up = True
+#                 authentication_enabled = False
+#             elif line == 'shutdown':
+#                 interface_up = False
+#             elif line == 'dot1x pae authenticator':
+#                 authentication_enabled = True
+#         if interface_up and not authentication_enabled and interface_name:
+#             list.append(f"Missing host authentication on access port: {interface_name}")
+#     final =  "\n".join(list)
+#     return f"Severity:1\n{remove_backslashes(final)}"
+#
+#
+# print(check_host_authentication('conf_2038.rtf'))
+
+
+# def control_plane(file):
+#     found = False
+#     with open(file, 'r') as file:
+#         for line in file:
+#             if line.strip().startswith('control-plane'):
+#                 found = True
+#         if not found:
+#             return "Control-plane missing"
+#
+# print(control_plane('conf_2033.rtf'))
+
+
 def remove_backslashes(lines):
     lines = lines.splitlines()
     clean_lines = [line.rstrip("\\") for line in lines]
     return "\n".join(clean_lines)
-def check_host_authentication(file):
-    interface_up = True
-    authentication_enabled = False
-    interface_name = ''
-
-    with open(file, 'r') as file:
-        list = []
-        for line in file:
-            line = line.strip()
-            if line.startswith('interface'):
-                if interface_up and not authentication_enabled and interface_name:
-                    list.append(f"Missing host authentication on access port: {interface_name}")
-                interface_name = line.split()[1]
-                interface_up = True
-                authentication_enabled = False
-            elif line == 'shutdown':
-                interface_up = False
-            elif line == 'dot1x pae authenticator':
-                authentication_enabled = True
-        if interface_up and not authentication_enabled and interface_name:
-            list.append(f"Missing host authentication on access port: {interface_name}")
-    final =  "\n".join(list)
-    return f"Severity:1\n{remove_backslashes(final)}"
+def interface_block(config_file_path):
+    list=[]
+    with open(config_file_path, 'r') as file:
+        config_data = file.read()
+        config_data=config_data.replace("!         \\","")
+        blocks=config_data.split("!\\")
+        for x in blocks:
+            x=x.strip()
+            if x.lstrip().startswith("interface"):
+                if (("shutdown" not in x)):
+                    if (("storm-control multicast" not in x) and("storm-control unicast" not in x)):
+                        xword=x.splitlines()
+                        list.append(f"Missing Storm Control on access ports --> {remove_backslashes(xword[0])})")
+    final = "\n".join(list)
+    return f"Severity:2\nDescription:\n{final}"
+print(interface_block('conf_2038.rtf'))
 
 
-print(check_host_authentication('conf_2038.rtf'))
+
+# def remove_backslashes(lines):
+#     lines = lines.splitlines()
+#     clean_lines = [line.rstrip("\\") for line in lines]
+#     return "\n".join(clean_lines)
+#
+# def port_security(config_file_path, num):
+#     list = []
+#     desc = 1
+#     with open(config_file_path, 'r') as file:
+#         config_data = file.read()
+#         config_data = config_data.replace("!         \\", "")
+#         blocks = config_data.split("!\\")
+#         for x in blocks:
+#             x = x.strip()
+#             xlines = x.splitlines()
+#             if x.lstrip().startswith("interface"):
+#                 if "shutdown" not in x:
+#                     if "switchport port-security" not in x:
+#                         list.append(f"Does not contain port security:{xlines[0]}")
+#                     for y in xlines:
+#                         y = y.lstrip()
+#                         if y.startswith('switchport port-security maximum'):
+#                             parts = y.split()
+#                             if len(parts) >= 4:
+#                                 desc = 2
+#                                 max = int(parts[3].strip("\\"))
+#                             if max > num:
+#                                 list.append(f"Number of mac addresses configured on switch are more than what is "
+#                                             f"specified:{xlines[0]}")
+#     final = "\n".join(list)
+#     return f"Severity:{desc}\nDescription:\n{remove_backslashes(final)}"
+#
+#
+# print(port_security("conf_2034.rtf", 4))
